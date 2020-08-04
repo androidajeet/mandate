@@ -29,9 +29,9 @@ public class ManadateController {
 	
 	
 	    //Save NPCI mandate info
-		@PostMapping(value = "/npci/mandate/xml", consumes = MediaType.APPLICATION_XML_VALUE)
+		@PostMapping("/npci/mandate/xml")
 		@ResponseStatus(HttpStatus.CREATED)
-		String newMandateXML(@RequestBody NPCIMandate npciMandateInfo) {
+		String newMandateXML() {
 			
 			//Put your mock server url here
 			final String uri = "https://a42b7777-98d7-4236-a47b-73333a8e6039.mock.pstmn.io/npci/xml";
