@@ -4,9 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -25,27 +23,41 @@ public class ManadateController {
 	@Autowired
 	private NPCIMandateTempRepository repository;
 
+	// Save NPCI mandate info
+	@PostMapping("/npci/mandate/xml")
+	@ResponseStatus(HttpStatus.CREATED)
+	String newMandateXML() {
+
+		// Put your mock server url here
+		final String uri = "https://e87ad81d-4b86-4134-af61-d017140833fc.mock.pstmn.io/npci";
+
+		RestTemplate restTemplate = new RestTemplate();
+		String mandateInfo = restTemplate.getForObject(uri, String.class);
+
+		log.info(mandateInfo);
+
+		NPCIMandate npciMandateDTO = new NPCIMandate(mandateInfo);
+		repository.save(npciMandateDTO);
+		return mandateInfo;
+
+	}
 	
-	
-	
-	    //Save NPCI mandate info
-		@PostMapping("/npci/mandate/xml")
+	// Save NPCI mandate info
+		@PostMapping("/npci/mandate/invalid")
 		@ResponseStatus(HttpStatus.CREATED)
-		String newMandateXML() {
-			
-			//Put your mock server url here
-			final String uri = "https://a42b7777-98d7-4236-a47b-73333a8e6039.mock.pstmn.io/npci/xml";
-			
-			 RestTemplate restTemplate = new RestTemplate();
-			    String mandateInfo = restTemplate.getForObject(uri, String.class);
-			     
-			    log.info(mandateInfo);
-			  
-			
+		String invalidMandateXML() {
+
+			// Put your mock server url here
+			final String uri = "https://e87ad81d-4b86-4134-af61-d017140833fc.mock.pstmn.io/npci/invalid";
+
+			RestTemplate restTemplate = new RestTemplate();
+			String mandateInfo = restTemplate.getForObject(uri, String.class);
+
+			log.info(mandateInfo);
+
 			NPCIMandate npciMandateDTO = new NPCIMandate(mandateInfo);
 			repository.save(npciMandateDTO);
 			return mandateInfo;
-			
 
 		}
 

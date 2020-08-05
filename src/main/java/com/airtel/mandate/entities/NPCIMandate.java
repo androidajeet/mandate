@@ -1,5 +1,6 @@
 package com.airtel.mandate.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,6 +14,7 @@ public class NPCIMandate {
 	@Id
 	@GeneratedValue
 	private Long id;
+	@Column(length=10485760)
 	private String mandateInfo;
 
 	public NPCIMandate() {

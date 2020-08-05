@@ -24,6 +24,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 public class BankController {
 
 	private static final Logger log = LoggerFactory.getLogger(BankController.class);
+	
 	@Autowired
 	private NPCIMandateTempRepository tempMandaterepository;
 	
