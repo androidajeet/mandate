@@ -53,15 +53,19 @@ public class BankController {
 		
 		log.info(mandateStatus);
 		Optional<NPCIMandate> mandate = tempMandaterepository.findById(Long.parseLong(mandateId));
-		NPCIMandate_Approved appovedMandate = new NPCIMandate_Approved(mandate.get().getId(), mandate.get().getMandateInfo());
+		NPCIMandate npciMandate = mandate.get();
+		//NPCIMandate_Approved appovedMandate = new NPCIMandate_Approved(mandate.get().getId(), mandate.get().getMandateInfo());
 		String status = "";
 		
 		if(mandateStatus.equals("1")) {
-			approvedMandaterepository.save(appovedMandate);
-			
-			tempMandaterepository.deleteById(appovedMandate.getId());
+			//approvedMandaterepository.save(appovedMandate);
+			npciMandate.setMandateStatus("Approved");
+			tempMandaterepository.save(npciMandate);
+			//tempMandaterepository.deleteById(appovedMandate.getId());
 			status= "Mandate approved successfully";
-		}else if ((mandateStatus=="0")) {
+		}else if (mandateStatus.equals("0")) {
+			npciMandate.setMandateStatus("Rejected");
+			tempMandaterepository.save(npciMandate);
 			status=  "Mandate rejected";
 		}else {
 			status= "Not recognized";
